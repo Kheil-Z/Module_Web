@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row">
+    <div class="col-4">
+        <div class="list-group">
+            {% for al in all_album %}
+            <a href='{% url "afficher_album" id=al.id %}' class="list-group-item list-group-item-action ">{{ al.Title }}</a>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

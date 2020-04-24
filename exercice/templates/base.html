@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+   <title>{% block title %}Album{% endblock %}</title>
+</head>
+<body>
+{% load static %}
+
+<div class="container-fluid">
+    <div class ="row">
+        <div class="col-8">
+                <h1>Albums</h1>
+        </div>
+        <div class="col-4">
+            <form method="GET" action='{% url "query" %}'>
+                <div class="input-group">
+                  <div class="custom-file">
+                    <input type="text" class="form-control" name="q" value="" placeholder="Une Idée..?"/>
+                  </div>
+                  <div class="input-group-append">
+                    <button class="btn btn-primary" type="submit">Rechercher</button>
+                  </div>
+                </div>
+            </form>
+        </div>
+        </div>
+       <section id="content">
+           <hr>
+           {% block content %}{% endblock %}
+       </section>
+
+</div>
+</body>
+</html>

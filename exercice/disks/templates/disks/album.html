@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row">
+    <div class="col-4">
+        <div class="list-group">
+            {% for al in all_album %}
+            <a href='{% url "afficher_album" id=al.id %}' class="list-group-item list-group-item-action ">{{ al.Title }}</a>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="col-8">
+        <h2>{{ album.Title }}</h2>
+        <hr/>
+            <b>Artiste</b>: {{album.artist.Name}}<br/>
+        <b>Pistes</b>
+        <table class="table table-bordered">
+            <tr>
+                <th>Nom</th>
+                <th>Compositeur</th>
+                <th>Durée</th>
+                <th>Prix unitaire</th>
+            </tr>
+
+            {% for tr in tracks %}
+            <tr>
+                <td>{{tr.Name}}</td>
+                <td> {{tr.Composer}}</td>
+                <td><span  style="white-space:nowrap"> {{tr.Milliseconds}} ms</span></td>
+                <td><span  style="white-space:nowrap">{{tr.UnitPrice}} $</span></td>
+            </tr>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}
