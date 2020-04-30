@@ -1,6 +1,32 @@
-<h1>Home</h1>
+{% extends "base.html" %}
 
-<ul>
-    <li><a href="/taskmanager">Home</a></li>
-    <li><a href="/taskmanager/connexion">Connectez vous</a></li>
-</ul>
+
+{% block menu %}
+    {% if user.is_authenticated %}
+        <nav class="menu">
+          <ul>
+            <li><a href="/taskmanager">Accueil</a></li>
+            <li><a href="/taskmanager/deconnexion">Deconnexion</a></li>
+            <li><a href="/Tasks">Tasks</a></li>
+          </ul>
+        </nav>
+    {% else %}
+        <nav class="menu">
+          <ul>
+            <li><a href="/taskmanager">Accueil</a></li>
+            <li><a href="/taskmanager/connexion">Se connecter</a></li>
+          </ul>
+        </nav>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        <h1>Home</h1>
+        <p>Bonjour, {{ user.username }} ! </p>
+    {% else %}
+        <h1>Home</h1>
+        <p>Bonjour, connectez vous pour avoir acces au site! </p>
+        <br>
+    {% endif %}
+{% endblock %}

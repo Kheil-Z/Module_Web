@@ -1,9 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+
 <h1>Merci et à Bientot!</h1>
 
 
+<p> Déconnexion réussie</p>
+<br>
+<p> <a href="/taskmanager">Aller a la page d'acceuille</a></p>
 
-<form method="post" action="/taskmanager/connexion">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Se connecter" />
-</form>
+{%endblock%}
