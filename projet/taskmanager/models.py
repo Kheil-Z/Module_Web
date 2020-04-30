@@ -20,5 +20,6 @@ class Task(models.Model):
 class Project(models.Model):
     Title = models.CharField(max_length=100)
     Description = models.TextField(null=True)
+    Members = models.ManyToManyField(User)
 
 # Create your models here.
