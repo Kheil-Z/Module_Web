@@ -1,15 +1,22 @@
-<h1>Se connecter</h1>
 
 {% if error %}
+<h1>Se connecter</h1>
 <p><strong>Utilisateur inconnu ou mauvais de mot de passe.</strong></p>
 {% endif %}
 
 {% if user.is_authenticated %}
-<p>Bonjour, {{ user.username }} ! </p>
+<h1>Connecté</h1>
+    <p>Bonjour, {{ user.username }} ! </p>
+    <br>
+    <form action="deconnexion" method="get">
+      <button name="logout" type="submit">Deconnexion</button>
+    </form>
+
 {% else %}
-<form method="post" action="/taskmanager/connexion">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Se connecter" />
-</form>
+<h1>Se connecter</h1>
+    <form method="post" action="/taskmanager/connexion">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Se connecter" />
+    </form>
 {% endif %}

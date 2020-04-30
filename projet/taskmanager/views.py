@@ -1,7 +1,10 @@
 from django.shortcuts import render
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
+
 from .forms import ConnexionForm
 
+def home(request):
+    return render(request, 'taskmanager/home.html')
 
 def connexion(request):
     error = False
@@ -20,3 +23,8 @@ def connexion(request):
         form = ConnexionForm()
 
     return render(request, 'taskmanager/connexion.html', locals())
+
+def deconnexion(request):
+    logout(request)
+    return render(request, 'taskmanager/logout.html')
+

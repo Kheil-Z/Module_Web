@@ -1,0 +1,9 @@
+<h1>Merci et à Bientot!</h1>
+
+
+
+<form method="post" action="/taskmanager/connexion">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Se connecter" />
+</form>
