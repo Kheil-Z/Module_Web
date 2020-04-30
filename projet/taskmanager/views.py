@@ -1,10 +1,14 @@
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
 from .forms import ConnexionForm
+from .models import Project
+
 
 def home(request):
     return render(request, 'taskmanager/home.html')
+
 
 def connexion(request):
     error = False
@@ -24,7 +28,14 @@ def connexion(request):
 
     return render(request, 'taskmanager/connexion.html', locals())
 
+
 def deconnexion(request):
     logout(request)
     return render(request, 'taskmanager/logout.html')
 
+
+@login_required
+def tasks(request):
+    user = request.user
+    projects = Project.objects.filter(members=user)
+    return render(request, 'taskmanager/tasks.html', {"user": user, "projects": projects})
