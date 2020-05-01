@@ -1,26 +1,63 @@
 {% extends "base.html" %}
 
+<!--Menu de la page actuelle-->
+{% block menu %}
+    {% if user.is_authenticated %}
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="#">Calend-Me</a>
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/taskmanager">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item-dropdown">
+                    <a class="nav-link dropdown-toggle" href="/taskmanager/tasks"id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Tasks
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </li>
+                <li class="nav-item"><a class="nav-link disabled"  href="/taskmanager/connexion">Connexion</a></li>
+                <li class="nav-item"><a class="nav-link" href="/taskmanager/deconnexion">Deconnexion</a></li>
+            </ul>
+        </nav>
+    {% else %}
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="#">Calend-Me</a>
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/taskmanager">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item-dropdown">
+                    <a class="nav-link dropdown-toggle disabled" href="/taskmanager/tasks"id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Tasks
+                    </a>
+                </li>
+                <li class="nav-item"><a class="nav-link"  href="/taskmanager/connexion">Connexion</a></li>
+                <li class="nav-item"><a class="nav-link disabled" href="/taskmanager/deconnexion">Deconnexion</a></li>
+            </ul>
+        </nav>
+    {% endif %}
+{% endblock %}
+
 {% block content %}
-
-{% if error %}
-    <h1>Se connecter</h1>
-    <p><strong>Utilisateur inconnu ou mauvais de mot de passe.</strong></p>
-{% endif %}
-
-{% if user.is_authenticated %}
-<h1>Connecté</h1>
-    <p>Bonjour, {{ user.username }} ! </p>
-    <br>
-    <form action="deconnexion" method="get">
-      <button name="logout" type="submit">Deconnexion</button>
-    </form>
-{% else %}
-<h1>Se connecter</h1>
-    <form method="post" action="/taskmanager/connexion">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Se connecter" />
-    </form>
-{% endif %}
+    {% if error %}
+        <h1>Se connecter</h1>
+        <p><strong>Utilisateur inconnu ou mauvais de mot de passe.</strong></p>
+    {% endif %}
+    {% if user.is_authenticated %}
+        <h1>Connecté</h1>
+            <p>Bonjour, {{ user.username }} ! </p>
+        {% else %}
+        <h1>Se connecter</h1>
+            <form method="post" action="/taskmanager/connexion">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Se connecter" />
+            </form>
+    {% endif %}
 
 {% endblock %}
