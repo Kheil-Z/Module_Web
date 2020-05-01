@@ -1,8 +1,9 @@
+from django.contrib.auth.models import User
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
-from .forms import ConnexionForm
+from .forms import ConnexionForm, NewUserForm
 from .models import Project
 
 
@@ -27,6 +28,22 @@ def connexion(request):
         form = ConnexionForm()
 
     return render(request, 'taskmanager/connexion.html', locals())
+
+def newUser(request):
+    form = NewUserForm();
+    return render(request, 'taskmanager/newuser.html', {"form":form})
+
+def createnewUser(request):
+    if request.method == "POST":
+        form = NewUserForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data["username"]
+            password = form.cleaned_data["password"]
+            first_name = form.cleaned_data["first_name"]
+            last_name = form.cleaned_data["last_name"]
+            user = User.objects.create_user(username=username, first_name=first_name, last_name=last_name, password=password)
+            user.save()
+    return  render(request, 'taskmanager/home.html')
 
 
 def deconnexion(request):
