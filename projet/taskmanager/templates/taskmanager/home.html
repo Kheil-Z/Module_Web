@@ -11,11 +11,11 @@
                 </li>
                 <li class="nav-item-dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Tasks
+                        Projects
                     </a>
                     <div class="dropdown-menu " style="right:auto; left: auto;" aria-labelledby="navbarDropdown">
                         {% for p in projects %}
-                            <a class="dropdown-item" href="/taskmanager">{{p.title}}</a>
+                            <a class="dropdown-item" href="/taskmanager/project/{{p.id}}">{{p.title}}</a>
                         {%endfor%}
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="/taskmanager/tasks">All</a>
@@ -34,7 +34,7 @@
                 </li>
                 <li class="nav-item-dropdown">
                     <a class="nav-link dropdown-toggle disabled" href="/taskmanager/tasks"id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Tasks
+                        Projects
                     </a>
                 </li>
                 <li class="nav-item"><a class="nav-link"  href="/taskmanager/connexion">Connexion</a></li>

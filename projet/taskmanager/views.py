@@ -4,13 +4,14 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
 from .forms import ConnexionForm, NewUserForm
-from .models import Project
+from .models import Project, Task
 
 
 def home(request):
-    user =request.user
-    projects = Project.objects.filter(members=user)
-    return render(request, 'taskmanager/home.html',{"user": user, "projects": projects} )
+    if request.user.is_authenticated:
+        user = request.user
+        projects = Project.objects.filter(members=user)
+    return render(request, 'taskmanager/home.html', locals())
 
 
 def connexion(request):
@@ -28,11 +29,16 @@ def connexion(request):
                 error = True
     else:
         form = ConnexionForm()
+    if request.user.is_authenticated:
+        user = request.user
+        projects = Project.objects.filter(members=user)
     return render(request, 'taskmanager/connexion.html', locals())
+
 
 def newUser(request):
     form = NewUserForm();
-    return render(request, 'taskmanager/newuser.html', {"form":form})
+    return render(request, 'taskmanager/newuser.html', {"form": form})
+
 
 def createnewUser(request):
     if request.method == "POST":
@@ -42,9 +48,10 @@ def createnewUser(request):
             password = form.cleaned_data["password"]
             first_name = form.cleaned_data["first_name"]
             last_name = form.cleaned_data["last_name"]
-            user = User.objects.create_user(username=username, first_name=first_name, last_name=last_name, password=password)
+            user = User.objects.create_user(username=username, first_name=first_name, last_name=last_name,
+                                            password=password)
             user.save()
-    return  render(request, 'taskmanager/home.html')
+    return render(request, 'taskmanager/home.html')
 
 
 def deconnexion(request):
@@ -57,3 +64,12 @@ def tasks(request):
     user = request.user
     projects = Project.objects.filter(members=user)
     return render(request, 'taskmanager/tasks.html', {"user": user, "projects": projects})
+
+
+@login_required
+def project(request, id):
+    user = request.user
+    projects=Project.objects.all()
+    project = projects.filter(id=id)
+    tasks = Task.objects.filter(project__in=project)
+    return render(request, 'taskmanager/project.html', {"user": user, "projects": projects,"project": project, "tasks": tasks})
