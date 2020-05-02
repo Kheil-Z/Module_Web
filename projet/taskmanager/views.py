@@ -8,7 +8,9 @@ from .models import Project
 
 
 def home(request):
-    return render(request, 'taskmanager/home.html')
+    user =request.user
+    projects = Project.objects.filter(members=user)
+    return render(request, 'taskmanager/home.html',{"user": user, "projects": projects} )
 
 
 def connexion(request):
@@ -26,7 +28,6 @@ def connexion(request):
                 error = True
     else:
         form = ConnexionForm()
-
     return render(request, 'taskmanager/connexion.html', locals())
 
 def newUser(request):
