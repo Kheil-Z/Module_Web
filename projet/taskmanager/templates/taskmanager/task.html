@@ -29,14 +29,40 @@
 {% block content %}
 <div class="container-fluid">
     <h1>{{project.title}}</h1>
-        <div class="row">
-            <div class="col-4">
-                <div class="list-group">
-                    {% for t in tasks %}
-                        <a href='/taskmanager/task/{{project.id}}/{{t.id}}' class="list-group-item list-group-item-action ">{{ t.title }}</a>
-                    {% endfor %}
-                </div>
+    <div class="row">
+        <div class="col-4">
+            <div class="list-group">
+                {% for t in tasks %}
+                    <a href='/taskmanager/task/{{project.id}}/{{t.id}}' class="list-group-item list-group-item-action ">{{ t.title }}</a>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-8">
+        <h2>{{ task.title }}</h2>
+        <hr/>
+         <table class="table table-bordered">
+            <tr>
+                <th>Description:</th>
+                <th>Responsable:</th>
+                <th>Priorité</th>
+                <th>Status</th>
+            </tr>
+            <tr>
+                <td>{{task.description}}</td>
+                <td> {{task.assigned_to}}</td>
+                <td> {{task.priority}}</td>
+                {% if task.status %}}
+                    <td> <ion-icon style="color:green" name="checkmark-circle-outline"></ion-icon> </td>
+                {%else%}
+                    <td> <ion-icon style="color:red" name="close-circle-outline"></ion-icon></td>
+                {%endif%}
+            </tr>
+         </table>
+            <div class="progress">
+                <div class="progress-bar bg-success" style="width:40%">Free Space</div>
             </div>
         </div>
     </div>
+</div>
+
 {% endblock %}

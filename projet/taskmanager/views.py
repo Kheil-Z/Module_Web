@@ -60,16 +60,18 @@ def deconnexion(request):
 
 
 @login_required
-def tasks(request):
-    user = request.user
-    projects = Project.objects.filter(members=user)
-    return render(request, 'taskmanager/tasks.html', {"user": user, "projects": projects})
+def task(request,id1,id2):
+    projects = Project.objects.all()
+    project = projects.get(id=id1)
+    tasks  = Task.objects.filter(project=project)
+    task = tasks.get(id=id2)
+    return render(request, 'taskmanager/task.html', {"projects": projects, "project": project, "tasks": tasks, "task": task})
 
 
 @login_required
 def project(request, id):
     user = request.user
     projects=Project.objects.all()
-    project = projects.filter(id=id)
-    tasks = Task.objects.filter(project__in=project)
-    return render(request, 'taskmanager/project.html', {"user": user, "projects": projects,"project": project, "tasks": tasks})
+    project = projects.get(id=id)
+    tasks = Task.objects.filter(project=project)
+    return render(request, 'taskmanager/project.html', {"user": user, "projects": projects, "project": project, "tasks": tasks})
