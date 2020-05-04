@@ -21,10 +21,18 @@ class Task(models.Model):
 
     def __str__(self):
         return self.title
+    def status(self):
+        if self.status == "n":
+            return ("nouvelle")
+        elif self.status == "enc":
+            return ("en cours")
+        elif self.status == "ena":
+            return ("en attente")
+        else:
+            return("classée")
 
 
 class Comment(models.Model):
-    title = models.CharField(max_length=100)
     message = models.TextField(null=True)
     date = models.DateTimeField(default=timezone.now)
     user = models.ForeignKey(User, on_delete=models.CASCADE)

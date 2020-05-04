@@ -12,13 +12,13 @@
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Projects
                 </a>
-                <div class="dropdown-menu " style="right:auto; left: auto;" aria-labelledby="navbarDropdown">
+               <div class="dropdown-menu " style="right:auto; left: auto;" aria-labelledby="navbarDropdown">
                     {% for p in projects %}
-                        <a class="dropdown-item" href="/taskmanager">{{p.title}}</a>
+                        <a class="dropdown-item" href="/taskmanager/project/{{p.id}}">{{p.title}}</a>
                     {%endfor%}
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="/taskmanager/tasks">All</a>
-                </div>
+               </div>
             </li>
             <li class="nav-item"><a class="nav-link disabled"  href="/taskmanager/connexion">Connexion</a></li>
             <li class="nav-item"><a class="nav-link" href="/taskmanager/deconnexion">Deconnexion</a></li>
@@ -51,10 +51,25 @@
                 <td>{{task.description}}</td>
                 <td> {{task.assigned_to}}</td>
                 <td> {{task.priority}}</td>
+                <td> {{task.status}}</td>
             </tr>
          </table>
             <div class="progress">
                 <div class="progress-bar bg-success" style="width:40%">Free Space</div>
+            </div>
+            <div class="comments">
+                {%for c in comments%}
+                    <div class="col-sm-5">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <strong>{{c.user.username}}</strong> <span class="text-muted">--{{c.date}}</span>
+                            </div>
+                            <div class="panel-body">
+                                {{c.message}}
+                            </div><!-- /panel-body -->
+                        </div><!-- /panel panel-default -->
+                    </div><!-- /col-sm-5 -->
+                {%endfor%}
             </div>
         </div>
     </div>

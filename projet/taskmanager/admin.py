@@ -15,10 +15,10 @@ class ProjectAdmin(admin.ModelAdmin):
     search_fields = ('title',)
 
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ('title','date','user','task')
-    list_filter = ('title', 'user','task')
-    ordering = ('title','date')
-    search_fields = ('title','date','task')
+    list_display = ('date','user','task')
+    list_filter = ('user','task')
+    ordering = ('date',)
+    search_fields = ('date','task')
 
 
 admin.site.register(Project,ProjectAdmin)

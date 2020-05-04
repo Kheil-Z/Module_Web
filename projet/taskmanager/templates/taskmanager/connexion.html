@@ -15,7 +15,7 @@
                     </a>
                     <div class="dropdown-menu " style="right:auto; left: auto;" aria-labelledby="navbarDropdown">
                         {% for p in projects %}
-                            <a class="dropdown-item" href="/taskmanager">{{p.title}}</a>
+                            <a class="dropdown-item" href="/taskmanager/project/{{p.id}}">{{p.title}}</a>
                         {%endfor%}
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="/taskmanager/tasks">All</a>

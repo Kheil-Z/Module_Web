@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
 from .forms import ConnexionForm, NewUserForm
-from .models import Project, Task
+from .models import Project, Task, Comment
 
 
 def home(request):
@@ -65,7 +65,8 @@ def task(request,id1,id2):
     project = projects.get(id=id1)
     tasks  = Task.objects.filter(project=project)
     task = tasks.get(id=id2)
-    return render(request, 'taskmanager/task.html', {"projects": projects, "project": project, "tasks": tasks, "task": task})
+    comments = Comment.objects.filter(task=task).order_by('-date')
+    return render(request, 'taskmanager/task.html', {"comments":comments, "projects": projects, "project": project, "tasks": tasks, "task": task})
 
 
 @login_required
