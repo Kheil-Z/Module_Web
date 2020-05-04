@@ -32,10 +32,15 @@
         <div class="row">
             <div class="col-4">
                 <div class="list-group">
-                    {% for t in tasks %}
-                        <a href='/taskmanager/task/{{project.id}}/{{t.id}}' class="list-group-item list-group-item-action ">{{ t.title }}</a>
+                    {% for p in projects %}
+                        <a href='/taskmanager/project/{{p.id}}' class="list-group-item list-group-item-action ">{{ p.title }}</a>
                     {% endfor %}
                 </div>
+            </div>
+             <div class="col-8">
+                 {% for p in projects %}
+                        <div class="description">{{p.description}}</div>
+                 {% endfor %}
             </div>
         </div>
     </div>

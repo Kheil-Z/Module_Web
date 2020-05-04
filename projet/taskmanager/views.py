@@ -69,6 +69,7 @@ def task(request,id1,id2):
     return render(request, 'taskmanager/task.html', {"comments":comments, "projects": projects, "project": project, "tasks": tasks, "task": task})
 
 
+
 @login_required
 def project(request, id):
     user = request.user
@@ -76,3 +77,8 @@ def project(request, id):
     project = projects.get(id=id)
     tasks = Task.objects.filter(project=project)
     return render(request, 'taskmanager/project.html', {"user": user, "projects": projects, "project": project, "tasks": tasks})
+
+def projects(request):
+    user = request.user
+    projects=Project.objects.all()
+    return render(request, 'taskmanager/projects.html', {"user": user, "projects": projects})

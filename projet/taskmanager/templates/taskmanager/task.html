@@ -17,7 +17,7 @@
                         <a class="dropdown-item" href="/taskmanager/project/{{p.id}}">{{p.title}}</a>
                     {%endfor%}
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="/taskmanager/tasks">All</a>
+                    <a class="dropdown-item" href="/taskmanager/projects">All</a>
                </div>
             </li>
             <li class="nav-item"><a class="nav-link disabled"  href="/taskmanager/connexion">Connexion</a></li>
@@ -38,7 +38,7 @@
             </div>
         </div>
         <div class="col-8">
-        <h2>{{ task.title }}</h2>
+            <h2>{{ task.title }}<i><small>  ({{task.description}}) </small></i></h2>
         <hr/>
          <table class="table table-bordered">
             <tr>
