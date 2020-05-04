@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
-from .forms import ConnexionForm, NewUserForm
+from .forms import ConnexionForm, NewUserForm, NewTaskForm
 from .models import Project, Task, Comment
 
 
@@ -69,7 +69,6 @@ def task(request,id1,id2):
     return render(request, 'taskmanager/task.html', {"comments":comments, "projects": projects, "project": project, "tasks": tasks, "task": task})
 
 
-
 @login_required
 def project(request, id):
     user = request.user
@@ -78,7 +77,35 @@ def project(request, id):
     tasks = Task.objects.filter(project=project)
     return render(request, 'taskmanager/project.html', {"user": user, "projects": projects, "project": project, "tasks": tasks})
 
+@login_required
 def projects(request):
     user = request.user
     projects=Project.objects.all()
     return render(request, 'taskmanager/projects.html', {"user": user, "projects": projects})
+
+@login_required
+def newtask(request):
+    form = NewTaskForm();
+    return render(request, 'taskmanager/newtask.html', {"form": form})
+
+def createnewTask(request):
+    if request.method == "POST":
+        form = NewTaskForm(request.POST)
+        if form.is_valid():
+            title = form.cleaned_data["title"]
+            description=form.cleaned_data["description"]
+            start_date=form.cleaned_data["start_date"]
+            due_date=form.cleaned_data["due_date"]
+            priority=form.cleaned_data["priority"]
+            assigned_to=form.cleaned_data["assigned_to"]
+            status=form.cleaned_data["status"]
+            project = form.cleaned_data["project"]
+
+            task = Task.objects.create(title=title,description=description,start_date=start_date,due_date=due_date,
+                                       priority=priority,assigned_to=assigned_to,status=status,project=project)
+            task.save()
+            return render(request, 'taskmanager/home.html')
+        else:
+            form = NewTaskForm()
+            return render(request, 'taskmanager/newtask.html', {'form': form})
+    return render(request, 'taskmanager/home.html')
