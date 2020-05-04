@@ -14,6 +14,13 @@ class ProjectAdmin(admin.ModelAdmin):
     ordering = ('title',)
     search_fields = ('title',)
 
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ('title','date','user','task')
+    list_filter = ('title', 'user','task')
+    ordering = ('title','date')
+    search_fields = ('title','date','task')
+
 
 admin.site.register(Project,ProjectAdmin)
 admin.site.register(Task,TaskAdmin)
+admin.site.register(Comment,CommentAdmin)

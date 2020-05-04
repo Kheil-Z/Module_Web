@@ -51,11 +51,6 @@
                 <td>{{task.description}}</td>
                 <td> {{task.assigned_to}}</td>
                 <td> {{task.priority}}</td>
-                {% if task.status %}}
-                    <td> <ion-icon style="color:green" name="checkmark-circle-outline"></ion-icon> </td>
-                {%else%}
-                    <td> <ion-icon style="color:red" name="close-circle-outline"></ion-icon></td>
-                {%endif%}
             </tr>
          </table>
             <div class="progress">
