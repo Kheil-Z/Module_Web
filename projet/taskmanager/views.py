@@ -72,6 +72,15 @@ def task(request, id1, id2):
     restant=(task.due_date - datetime.date.today()).days
     passee = (total-restant)
     pourcentage = (1-(restant/total)) *100
+    if request.method == "POST":
+        message = request.POST["message"]
+        date = datetime.datetime.now()
+        user = request.user
+        task = Task.objects.get(id=id2)
+
+        comment = Comment.objects.create(message=message, date=date, user=user, task=task)
+        comment.save()
+        return redirect('/taskmanager/task/' + str(id1) + '/' + str(id2))
     return render(request, 'taskmanager/task.html', locals())
     # {"comments": comments, "projects": projects, "project": project, "tasks": tasks, "task": task})
 
@@ -83,15 +92,16 @@ def project(request, id):
     project = projects.get(id=id)
     tasks = Task.objects.filter(project=project)
     is_empty = (len(tasks) ==0)
+    participants = [str(u.username) for u in project.members.all()]
+    print(participants)
     return render(request, 'taskmanager/project.html', locals())
-                  #{"user": user, "projects": projects, "project": project, "tasks": tasks, "is_empty": is_empty})
 
 
 @login_required
 def projects(request):
     user = request.user
     projects = Project.objects.all()
-    return render(request, 'taskmanager/projects.html',locals())# {"user": user, "projects": projects})
+    return render(request, 'taskmanager/projects.html',locals())
 
 
 @login_required
@@ -211,22 +221,4 @@ def editProject(request, id):
                                     'members': User.objects.filter(username__in=members_username_list)})
         return render(request, 'taskmanager/editproject.html', locals())
 
-@login_required
-def createnewComment(request,id1,id2):
-    if request.method == "POST":
-        form = NewCommentForm(request.POST or None)
-        if form.is_valid():
-            message = form.cleaned_data["message"]
-            date = datetime.datetime.now()
-            user= request.user
-            task= Task.objects.get(id=id2)
 
-            comment = Comment.objects.create(message=message, date=date, user=user, task=task)
-            comment.save()
-            return redirect('/taskmanager/task/' + str(id1) +'/' +str(id2))
-        else:
-            form = NewCommentForm()
-            return render(request, 'taskmanager/newcomment.html', locals())
-    else:
-        form = NewCommentForm();
-        return render(request, 'taskmanager/newcomment.html', locals())

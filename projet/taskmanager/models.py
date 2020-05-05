@@ -40,7 +40,7 @@ class Comment(models.Model):
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.title
+        return self.message
 
 
 class Project(models.Model):

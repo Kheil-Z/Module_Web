@@ -15,5 +15,4 @@ urlpatterns = [
     path('edittask/<int:id1>/<int:id2>', views.editTask, name='edittask'),
     path('createnewproject', views.createnewProject, name="createnewproject"),
     path('editproject/<int:id>', views.editProject, name='editproject'),
-    path('createnewcomment/<int:id1>/<int:id2>', views.createnewComment, name='createnewcomment'),
 ]

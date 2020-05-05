@@ -81,10 +81,18 @@
                         </div><!-- /panel panel-default -->
                     </div><!-- /col-sm-5 -->
                 {%endfor%}
-                 <br>
-                    <a href='{% url "createnewcomment" id1 id2%}' style="color: forestgreen " class="list-group-item list-group-item-action ">Répondre</a>
+                <br>
 
             </div>
+            <form method="Post" >
+                {% csrf_token %}
+                <div class="input-group">
+                    <input type="text" class="form-control" name="message" value="" placeholder="..."/>
+                  <div class="input-group-append">
+                    <button class="btn btn-primary" type="submit">Poster le commentaire</button>
+                  </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -92,3 +100,4 @@
 <a href="{% url 'edittask' id1 id2 %}">Modifier</a>
 
 {% endblock %}
+

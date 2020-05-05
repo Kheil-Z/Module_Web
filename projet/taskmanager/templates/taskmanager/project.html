@@ -45,6 +45,15 @@
                     <a href='/taskmanager/createnewtask' style="color: forestgreen " class="list-group-item list-group-item-action ">Ajouter une tache</a>
                 </div>
             </div>
+            <div class="col-8">
+                <p style="text-align: center; font-size: 35px"> {{project.description}} </p>
+                <p style="text-align: left; font-size: 20px "> Participants actuels: </p>
+                    <ul>
+                        {%for l in participants%}
+                            <li style="font-size: 15px">{{l}}</li>
+                        {%endfor%}
+                    </ul>
+            </div>
         </div>
     </div>
 
