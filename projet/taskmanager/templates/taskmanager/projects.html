@@ -35,6 +35,8 @@
                     {% for p in projects %}
                         <a href='/taskmanager/project/{{p.id}}' class="list-group-item list-group-item-action ">{{ p.title }}</a>
                     {% endfor %}
+                    <br>
+                    <a href='/taskmanager/createnewproject' style="color: forestgreen " class="list-group-item list-group-item-action ">Ajouter un Projet</a>
                 </div>
             </div>
              <div class="col-8">

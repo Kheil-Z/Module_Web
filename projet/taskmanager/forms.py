@@ -49,7 +49,7 @@ class NewTaskForm(forms.Form):
 class NewProjectForm(forms.Form):
     title = forms.CharField(label="Titre", max_length=100)
     description = forms.CharField(label="Description", widget=forms.Textarea)
-    members = forms.ModelMultipleChoiceField(label="Participants",queryset=User.objects.all())
+    members = forms.ModelMultipleChoiceField(label="Participants",queryset=User.objects.all(), widget=forms.CheckboxSelectMultiple)
     # def clean(self):
     #     # data from the form is fetched using super function
     #     cleaned_data = super(NewTaskForm, self).clean()

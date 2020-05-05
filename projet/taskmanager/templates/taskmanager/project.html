@@ -35,10 +35,17 @@
                     {% for t in tasks %}
                         <a href='/taskmanager/task/{{project.id}}/{{t.id}}' class="list-group-item list-group-item-action ">{{ t.title }}</a>
                     {% endfor %}
+                    {% if is_empty %}
+                        <br>
+                        <p>Oops! Aucune tache n'existe dans ce projet...</p>
+                    {% endif %}
                     <br>
                     <a href='/taskmanager/createnewtask' style="color: forestgreen " class="list-group-item list-group-item-action ">Ajouter une tache</a>
                 </div>
             </div>
         </div>
     </div>
+<p>Hey</p>
+<a href="{% url 'editproject' id %}">Modifier Projet</a>
+
 {% endblock %}

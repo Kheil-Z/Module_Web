@@ -3,7 +3,7 @@
 
 <head >
 
-    <title>Nouveau Projet</title>
+    <title>Modify Project</title>
 
     <meta charset="utf-8" />
 
@@ -16,11 +16,11 @@
     <div class="container">
     <div class="row">
         <div class="col-md-4 col-md-offset-4">
-        <h2>Nouveau Projet</h2>
-            <form method="post" action="/taskmanager/createnewproject">
+        <h2>Modification</h2>
+            <form method="post" action="{% url 'editproject' id %}">
                 {% csrf_token %}
                 {{ form.as_p }}
-                <input type="submit" value="Creer le Projet!" />
+                <input type="submit" value="Modifier le Projet" />
             </form>
         </div>
     </div>
