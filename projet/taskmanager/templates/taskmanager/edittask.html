@@ -3,7 +3,7 @@
 
 <head >
 
-    <title>Nouvelle Tache</title>
+    <title>Modify Task</title>
 
     <meta charset="utf-8" />
 
@@ -16,11 +16,11 @@
     <div class="container">
     <div class="row">
         <div class="col-md-4 col-md-offset-4">
-        <h2>Nouvelle Tache</h2>
-            <form method="post" action="/taskmanager/createnewtask">
+        <h2>Modification</h2>
+            <form method="post" action="{% url 'edittask' id1 id2 %}">
                 {% csrf_token %}
                 {{ form.as_p }}
-                <input type="submit" value="Creer la tâche" />
+                <input type="submit" value="Modifier la tâche" />
             </form>
         </div>
     </div>

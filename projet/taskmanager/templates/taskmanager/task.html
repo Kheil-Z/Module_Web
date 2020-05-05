@@ -20,8 +20,8 @@
                     <a class="dropdown-item" href="/taskmanager/projects">All</a>
                </div>
             </li>
-            <li class="nav-item"><a class="nav-link disabled"  href="/taskmanager/connexion">Connexion</a></li>
-            <li class="nav-item"><a class="nav-link" href="/taskmanager/deconnexion">Deconnexion</a></li>
+            <li class="nav-item"><a class="nav-link disabled" href="/taskmanager/connexion">Connexion</a></li>
+            <li class="nav-item"><a class="nav-link" style="color: lightcoral" href="/taskmanager/deconnexion">Deconnexion</a></li>
         </ul>
     </nav>
 {% endblock %}
@@ -35,6 +35,8 @@
                 {% for t in tasks %}
                     <a href='/taskmanager/task/{{project.id}}/{{t.id}}' class="list-group-item list-group-item-action ">{{ t.title }}</a>
                 {% endfor %}
+                 <br>
+                    <a href='/taskmanager/createnewtask' style="color: forestgreen " class="list-group-item list-group-item-action ">Ajouter une tache</a>
             </div>
         </div>
         <div class="col-8">
@@ -74,5 +76,7 @@
         </div>
     </div>
 </div>
+<p>Hey</p>
+<a href="{% url 'edittask' id1 id2 %}">Modifier</a>
 
 {% endblock %}

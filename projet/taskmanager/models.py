@@ -3,8 +3,8 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.utils import timezone
 
+STATUS_CHOICES = [("n", "nouvelle"), ("enc", "en cours"), ("ena", "en attente"), ("t", "terminée"), ("cl", "classée")]
 
-STATUS_CHOICES =[("n","nouvelle"), ("enc","en cours"), ("ena","en attente"), ("t","terminée"), ("cl","classée")]
 
 class Task(models.Model):
     title = models.CharField(max_length=100)
@@ -13,7 +13,7 @@ class Task(models.Model):
     due_date = models.DateField()
     priority = models.IntegerField(
         default=0,
-        validators=[MaxValueValidator(10), MinValueValidator(0)]
+        validators=[MaxValueValidator(10), MinValueValidator(0)],
     )
     assigned_to = models.ForeignKey(User, on_delete=models.CASCADE)
     status = models.CharField(max_length=50, choices=STATUS_CHOICES)
@@ -21,6 +21,7 @@ class Task(models.Model):
 
     def __str__(self):
         return self.title
+
     def status(self):
         if self.status == "n":
             return ("nouvelle")
@@ -29,7 +30,7 @@ class Task(models.Model):
         elif self.status == "ena":
             return ("en attente")
         else:
-            return("classée")
+            return ("classée")
 
 
 class Comment(models.Model):
@@ -40,6 +41,7 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.title
+
 
 class Project(models.Model):
     title = models.CharField(max_length=100)

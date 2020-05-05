@@ -22,7 +22,7 @@
                     </div>
                 </li>
                 <li class="nav-item"><a class="nav-link disabled"  href="/taskmanager/connexion">Connexion</a></li>
-                <li class="nav-item"><a class="nav-link" href="/taskmanager/deconnexion">Deconnexion</a></li>
+                <li class="nav-item"><a class="nav-link" style="color: lightcoral" href="/taskmanager/deconnexion">Deconnexion</a></li>
             </ul>
         </nav>
     {% else %}
@@ -37,7 +37,7 @@
                         Projects
                     </a>
                 </li>
-                <li class="nav-item"><a class="nav-link"  href="/taskmanager/connexion">Connexion</a></li>
+                <li class="nav-item"><a class="nav-link" style="color: green;" href="/taskmanager/connexion">Connexion</a></li>
                 <li class="nav-item"><a class="nav-link disabled" href="/taskmanager/deconnexion">Deconnexion</a></li>
             </ul>
         </nav>
@@ -59,7 +59,7 @@
                 {{ form.as_p }}
                 <input type="submit" value="Se connecter" />
             </form>
-        <a href="/newuser" style="font-size: 0.8rem; color: red; padding: 2px 2px;">Not registered yet?</a>
+        <a href="/createnewuser" style="font-size: 0.8rem; color: red; padding: 2px 2px;">Not registered yet?</a>
     {% endif %}
 
 {% endblock %}
