@@ -3,6 +3,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.utils import timezone
 
+#Variable pour le choix des status
 STATUS_CHOICES = [("n", "nouvelle"), ("enc", "en cours"), ("ena", "en attente"), ("t", "terminée"), ("cl", "classée")]
 
 
@@ -22,6 +23,7 @@ class Task(models.Model):
     def __str__(self):
         return self.title
 
+    #Pour pouvoir afficher correctement le status de la tache
     def status(self):
         if self.status == "n":
             return ("nouvelle")
@@ -50,5 +52,3 @@ class Project(models.Model):
 
     def __str__(self):
         return self.title
-
-# Create your models here.

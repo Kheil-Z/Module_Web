@@ -1,7 +1,6 @@
 import datetime
 
 from django.contrib.auth.models import User
-from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -17,7 +16,7 @@ def home(request):  # Page D'acceuille
     return render(request, 'taskmanager/home.html', locals())
 
 
-def connexion(request):  # Fonction de connexion basic
+def connexion(request):  # Fonction de connection basic
     error = False
 
     if request.method == "POST":
@@ -38,7 +37,7 @@ def connexion(request):  # Fonction de connexion basic
     return render(request, 'taskmanager/connexion.html', locals())
 
 
-def createnewUser(request):
+def createnewUser(request): #Fonction pour creer un nouvel utilisateur
     if request.method == "POST":
         form = NewUserForm(request.POST)
         if form.is_valid():
@@ -55,23 +54,27 @@ def createnewUser(request):
         return render(request, 'taskmanager/newuser.html', {"form": form})
 
 
-def deconnexion(request):
+def deconnexion(request): #Fonction de deconnexion
     logout(request)
     return render(request, 'taskmanager/logout.html')
 
 
 @login_required
-def task(request, id1, id2):
+def task(request, id1, id2): #Fonction qui genere l'affichage de la tache d'id id2 , contenu dans le projet d'id id1
+   # Je commences par receuillir les donnees utiles pour l'affichage: enssemble de projets comme d'habtiude
+   # pour la navigation, projet et tacheque l'utilisateur veut voir, enssemble de taches et commentaires
     projects = Project.objects.all()
     project = projects.get(id=id1)
     tasks = Task.objects.filter(project=project)
     task = tasks.get(id=id2)
     comments = Comment.objects.filter(task=task).order_by('-date')
 
+    #Ensuite, les valeurs suivantes servent a rendre un joli affichage du temps restant et utilise.
     total= (task.due_date -task.start_date).days
     restant=(task.due_date - datetime.date.today()).days
     passee = (total-restant)
     pourcentage = (1-(restant/total)) *100
+
     if request.method == "POST":
         message = request.POST["message"]
         date = datetime.datetime.now()
@@ -82,30 +85,28 @@ def task(request, id1, id2):
         comment.save()
         return redirect('/taskmanager/task/' + str(id1) + '/' + str(id2))
     return render(request, 'taskmanager/task.html', locals())
-    # {"comments": comments, "projects": projects, "project": project, "tasks": tasks, "task": task})
 
 
 @login_required
-def project(request, id):
+def project(request, id): # Fonction qui affiche le projet d'id id
     user = request.user
     projects = Project.objects.all()
     project = projects.get(id=id)
     tasks = Task.objects.filter(project=project)
-    is_empty = (len(tasks) ==0)
+    is_empty = (len(tasks) ==0) #Cette variable sert a afficher quelquechose de specifique si il n'y a aucune tache dans ce projet...
     participants = [str(u.username) for u in project.members.all()]
-    print(participants)
     return render(request, 'taskmanager/project.html', locals())
 
 
 @login_required
-def projects(request):
+def projects(request): #fonction qui affiche tous les projets relatifs a l'utilisateur connecte
     user = request.user
     projects = Project.objects.all()
     return render(request, 'taskmanager/projects.html',locals())
 
 
 @login_required
-def createnewTask(request):
+def createnewTask(request): #Pour la creation d'une nouvelle tache
     if request.method == "POST":
         form = NewTaskForm(request.POST or None)
         if form.is_valid():
@@ -133,7 +134,7 @@ def createnewTask(request):
 
 
 @login_required
-def editTask(request, id1, id2):
+def editTask(request, id1, id2): # Pour l'edition d'une tache d'identifiant id2, id1 sert a se reperer facilement dans quel projet l'on est et faciliter un affichage
     if request.method == "POST":
         form = NewTaskForm(request.POST or None)
         if form.is_valid():
@@ -146,6 +147,7 @@ def editTask(request, id1, id2):
             status = form.cleaned_data["status"]
             project = form.cleaned_data["project"]
 
+            # On fait bien attention a ne pas creer de nouvel objet, mais modifier celui existant!
             task = Task.objects.get(id=id2)
             task.title = title
             task.description = description
@@ -164,6 +166,7 @@ def editTask(request, id1, id2):
             form = NewTaskForm()
             return render(request, 'taskmanager/newtask.html', locals())
     else:
+        #instance sert a receuillir les donnees pour un formulaire pre-remplis avec les anciennes valeures
         instance = Task.objects.get(id=id2)
         form = NewTaskForm(initial={'title': instance.title, 'description': instance.description,
                                     'start_date': instance.start_date, 'due_date': instance.due_date,
@@ -173,7 +176,7 @@ def editTask(request, id1, id2):
 
 
 @login_required
-def createnewProject(request):
+def createnewProject(request): #pour creer un noveau projet
     if request.method == "POST":
         form = NewProjectForm(request.POST or None)
         if form.is_valid():
@@ -195,7 +198,7 @@ def createnewProject(request):
         return render(request, 'taskmanager/newproject.html', {"form": form})
 
 @login_required
-def editProject(request, id):
+def editProject(request, id): # Pour modifier un projet
     if request.method == "POST":
         form = NewProjectForm(request.POST or None)
         if form.is_valid():
@@ -208,6 +211,7 @@ def editProject(request, id):
             project.description = description
             project.save()
 
+            #il faut ajouter les memebres un a un
             for m in members:
                 project.members.add(m)
             return redirect('/taskmanager/project/' + str(id))
@@ -216,9 +220,9 @@ def editProject(request, id):
             return render(request, 'taskmanager/newproject.html', locals())
     else:
         instance = Project.objects.get(id=id)
+
+        #la liste suivante sert a precocher les memebres qui etaient deja dans le projet
         members_username_list =[str(u.username) for u in instance.members.all()] # Je cree la liste des username deja presents dans le projet pour les passer en valeurs initiales du formulaire
         form = NewProjectForm(initial={'title': instance.title, 'description': instance.description,
                                     'members': User.objects.filter(username__in=members_username_list)})
         return render(request, 'taskmanager/editproject.html', locals())
-
-

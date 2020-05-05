@@ -1,10 +1,10 @@
 from django import forms
 from django.contrib.auth.models import User
-from django.core.validators import MaxValueValidator, MinValueValidator
 from django.forms import DateInput, SelectDateWidget
 
 from .models import Project, Task
 
+#Encore, il nous faut cette liste pour choisir parmis les status possible
 STATUS_CHOICES = [("n", "nouvelle"), ("enc", "en cours"), ("ena", "en attente"), ("t", "terminée"), ("cl", "classée")]
 
 class ConnexionForm(forms.Form):
@@ -30,6 +30,7 @@ class NewTaskForm(forms.Form):
     project = forms.ModelChoiceField(label="Projet", queryset=Project.objects.all())
     assigned_to = forms.ModelChoiceField(label="Personne en charge", queryset=User.objects.all())
 
+    # Fonction pour valider correctement le formulaire
     def clean(self):
         # data from the form is fetched using super function
         cleaned_data = super(NewTaskForm, self).clean()
