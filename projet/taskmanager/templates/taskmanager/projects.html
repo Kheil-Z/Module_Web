@@ -18,6 +18,8 @@
                     {%endfor%}
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="/taskmanager/projects">All</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href='/taskmanager/createnewproject' style="color: forestgreen ">Ajouter un Projet</a>
                 </div>
             </li>
             <li class="nav-item"><a class="nav-link disabled"  href="/taskmanager/connexion">Connexion</a></li>
@@ -27,23 +29,46 @@
 {% endblock %}
 
 {% block content %}
+
 <div class="container-fluid">
     <h1>{{project.title}}</h1>
         <div class="row">
-            <div class="col-4">
-                <div class="list-group">
-                    {% for p in projects %}
-                        <a href='/taskmanager/project/{{p.id}}' class="list-group-item list-group-item-action ">{{ p.title }}</a>
-                    {% endfor %}
-                    <br>
-                    <a href='/taskmanager/createnewproject' style="color: forestgreen " class="list-group-item list-group-item-action ">Ajouter un Projet</a>
+            {% for p in projects %}
+                <div class="col-4">
+                    <div class="list-group">
+                        <a href='/taskmanager/project/{{p.id}}' class="list-group-item list-group-item-action ">{{ p.title }} </a>
+                    </div>
                 </div>
-            </div>
-             <div class="col-8">
-                 {% for p in projects %}
+                <div class="col-8">
+                    <div class="list-group">
                         <div class="description">{{p.description}}</div>
-                 {% endfor %}
-            </div>
+                    </div>
+                </div>
+            {%endfor%}
         </div>
-    </div>
+</div>
+
+
+
+<!--<div class="container-fluid">-->
+<!--    <h1>{{project.title}}</h1>-->
+<!--        <div class="row">-->
+<!--            <div class="col-4">-->
+<!--                <div class="list-group">-->
+<!--                    {% for p in projects %}-->
+<!--                        <a href='/taskmanager/project/{{p.id}}' class="list-group-item list-group-item-action ">{{ p.title }} </a>-->
+<!--                    {% endfor %}-->
+<!--                    <br>-->
+<!--                    <a href='/taskmanager/createnewproject' style="color: forestgreen " class="list-group-item list-group-item-action ">Ajouter un Projet</a>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="col-8">-->
+<!--                 <div class="list-group">-->
+<!--                 {% for p in projects %}-->
+<!--                        <div class="description">{{p.description}}</div>-->
+<!--                 {% endfor %}-->
+<!--                 </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
 {% endblock %}
