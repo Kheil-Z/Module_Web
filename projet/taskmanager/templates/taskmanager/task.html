@@ -56,9 +56,16 @@
                 <td> {{task.status}}</td>
             </tr>
          </table>
+            <p> Progression en temps </p>
             <div class="progress">
-                <div class="progress-bar bg-success" style="width:40%">Free Space</div>
+                <div class="progress-bar bg-success" style="width:{{pourcentage}}%">{{passee}} jours</div>
+                <div class="progress-bar bg-danger" role="progressbar"  style="width:100%">{{restant}} jours</div>
             </div>
+            <p style="float: left">{{task.start_date}}</p>
+            <p style="float: right">{{task.due_date}}</p>
+            <br>
+            <br>
+
             <div class="comments">
                 {%for c in comments%}
                     <div class="col-sm-5">
@@ -66,7 +73,7 @@
                             <div class="panel-heading">
                                 <strong>{{c.user.username}}</strong> <span class="text-muted">--{{c.date}}</span>
                             </div>
-                            <div class="panel-body">
+                            <div class="panel-body" style="text-indent: 20px">
                                 {{c.message}}
                             </div><!-- /panel-body -->
                         </div><!-- /panel panel-default -->

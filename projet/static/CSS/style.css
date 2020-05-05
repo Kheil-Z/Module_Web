@@ -1,15 +1,18 @@
-.comments{
-	background-color: lightgrey;
-	width: 300px;
-	border: 15px solid green;
-	padding: 50px;
-	margin: 20px;
+.thumbnail {
+    padding:0px;
 }
-
 .panel {
 	position:relative;
 }
+.panel-body{
+	top:11px;left:-16px;
+	right:100%;
+	display:block;
+	border-color:transparent;
+	border-style:solid solid outset;
+}
 .panel>.panel-heading:after,.panel>.panel-heading:before{
+
 	position:absolute;
 	top:11px;left:-16px;
 	right:100%;

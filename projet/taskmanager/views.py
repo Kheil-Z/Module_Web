@@ -67,6 +67,11 @@ def task(request, id1, id2):
     tasks = Task.objects.filter(project=project)
     task = tasks.get(id=id2)
     comments = Comment.objects.filter(task=task).order_by('-date')
+
+    total= (task.due_date -task.start_date).days
+    restant=(task.due_date - datetime.date.today()).days
+    passee = (total-restant)
+    pourcentage = (1-(restant/total)) *100
     return render(request, 'taskmanager/task.html', locals())
     # {"comments": comments, "projects": projects, "project": project, "tasks": tasks, "task": task})
 
