@@ -76,7 +76,6 @@ def project(request, id):
     project = projects.get(id=id)
     tasks = Task.objects.filter(project=project)
     is_empty = (len(tasks) ==0)
-    print(is_empty)
     return render(request, 'taskmanager/project.html', locals())
                   #{"user": user, "projects": projects, "project": project, "tasks": tasks, "is_empty": is_empty})
 
@@ -178,28 +177,29 @@ def createnewProject(request):
         form = NewProjectForm();
         return render(request, 'taskmanager/newproject.html', {"form": form})
 
-# @login_required
-# def editProject(request, id):
-#     if request.method == "POST":
-#         form = NewProjectForm(request.POST or None)
-#         if form.is_valid():
-#             title = form.cleaned_data["title"]
-#             description = form.cleaned_data["description"]
-#             members = form.cleaned_data["members"]
-#
-#             project = Project.objects.get(id=id)
-#             project.title = title
-#             project.description = description
-#             project.save()
-#
-#             for m in members:
-#                 project.members.add(m)
-#             return redirect('/taskmanager/project/' + str(id))
-#         else:
-#             form = NewProjectForm()
-#             return render(request, 'taskmanager/newproject.html', locals())
-#     else:
-#         instance = Project.objects.get(id=id)
-#         form = NewProjectForm(initial={'title': instance.title, 'description': instance.description,
-#                                     'members': instance.members})
-#         return render(request, 'taskmanager/editproject.html', locals())
+@login_required
+def editProject(request, id):
+    if request.method == "POST":
+        form = NewProjectForm(request.POST or None)
+        if form.is_valid():
+            title = form.cleaned_data["title"]
+            description = form.cleaned_data["description"]
+            members = form.cleaned_data["members"]
+
+            project = Project.objects.get(id=id)
+            project.title = title
+            project.description = description
+            project.save()
+
+            for m in members:
+                project.members.add(m)
+            return redirect('/taskmanager/project/' + str(id))
+        else:
+            form = NewProjectForm()
+            return render(request, 'taskmanager/newproject.html', locals())
+    else:
+        instance = Project.objects.get(id=id)
+        members_username_list =[str(u.username) for u in instance.members.all()] # Je cree la liste des username deja presents dans le projet pour les passer en valeurs initiales du formulaire
+        form = NewProjectForm(initial={'title': instance.title, 'description': instance.description,
+                                    'members': User.objects.filter(username__in=members_username_list)})
+        return render(request, 'taskmanager/editproject.html', locals())
