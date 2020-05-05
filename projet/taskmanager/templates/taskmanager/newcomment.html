@@ -1,0 +1,34 @@
+
+<html lang="en">
+
+<head >
+
+    <title>New Comment</title>
+
+    <meta charset="utf-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+
+<body  style="padding-top: 60px;background-color: #f5f7f8 !important;">
+    <div class="container">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+        <h2>Nouveau Commentaire</h2>
+            <form method="post" action="{% url 'createnewcomment' id1 id2 %}">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Poster!" />
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>
+
+
+

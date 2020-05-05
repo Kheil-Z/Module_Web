@@ -1,10 +1,12 @@
+import datetime
+
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
-from .forms import ConnexionForm, NewUserForm, NewTaskForm, NewProjectForm
+from .forms import ConnexionForm, NewUserForm, NewTaskForm, NewProjectForm, NewCommentForm
 from .models import Project, Task, Comment
 
 
@@ -203,3 +205,23 @@ def editProject(request, id):
         form = NewProjectForm(initial={'title': instance.title, 'description': instance.description,
                                     'members': User.objects.filter(username__in=members_username_list)})
         return render(request, 'taskmanager/editproject.html', locals())
+
+@login_required
+def createnewComment(request,id1,id2):
+    if request.method == "POST":
+        form = NewCommentForm(request.POST or None)
+        if form.is_valid():
+            message = form.cleaned_data["message"]
+            date = datetime.datetime.now()
+            user= request.user
+            task= Task.objects.get(id=id2)
+
+            comment = Comment.objects.create(message=message, date=date, user=user, task=task)
+            comment.save()
+            return redirect('/taskmanager/task/' + str(id1) +'/' +str(id2))
+        else:
+            form = NewCommentForm()
+            return render(request, 'taskmanager/newcomment.html', locals())
+    else:
+        form = NewCommentForm();
+        return render(request, 'taskmanager/newcomment.html', locals())

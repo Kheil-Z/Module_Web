@@ -50,18 +50,10 @@ class NewProjectForm(forms.Form):
     title = forms.CharField(label="Titre", max_length=100)
     description = forms.CharField(label="Description", widget=forms.Textarea)
     members = forms.ModelMultipleChoiceField(label="Participants",queryset=User.objects.all(), widget=forms.CheckboxSelectMultiple)
-    # def clean(self):
-    #     # data from the form is fetched using super function
-    #     cleaned_data = super(NewTaskForm, self).clean()
-    #     # extract the username and text field from the data
-    #     priority = self.cleaned_data['priority']
-    #     start = self.cleaned_data['start_date']
-    #     due = self.cleaned_data['due_date']
-    #
-    #     # conditions to be met for the username length
-    #     if (priority < 0) or (priority > 10):
-    #         self.add_error("priority", "Priorité entre 0 et 10!")
-    #     if due < start:
-    #         self.add_error("due_date", "Date de début devrait etre avant celle de fin!")
-    #         # return any errors if found
-    #     return cleaned_data
+
+
+class NewCommentForm(forms.Form):
+    message = forms.CharField(label="Message", widget=forms.Textarea)
+
+
+
